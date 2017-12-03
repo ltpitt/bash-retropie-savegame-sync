@@ -12,7 +12,7 @@
 
 # Customize the following variables according to your setup
 LOCAL_ROM_FOLDER="/home/pi/RetroPie/roms/"
-REMOTE_ROM_FOLDER="pi@gameboyzero:/home/pi/RetroPie/roms/"
+REMOTE_ROM_FOLDER="pi@retropie:/home/pi/RetroPie/roms/"
 BACKUP="/home/pi/RetroPie/backup_savegames/"
 
 # There should be no need to change anything below this line
@@ -28,12 +28,12 @@ mkdir -p $BACKUP$NOW/local_savegames
 mkdir -p $BACKUP$NOW/remote_savegames
 echo
 echo "Backing up $LOCAL_ROM_FOLDER savegames into: $BACKUP$NOW/LOCAL_SAVEGAMES..."
-rsync -avzp --include '*/' --include '*.srm' --exclude '*' $LOCAL_ROM_FOLDER $BACKUP$NOW/local_savegames
+rsync -avzp --include '*/' --include '*.srm' --include '*.sav' --include '*.state' --exclude '*' $LOCAL_ROM_FOLDER $BACKUP$NOW/local_savegames
 echo
 echo "Backing up $REMOTE_ROM_FOLDER savegames into: $BACKUP$NOW/REMOTE_SAVEGAMES..."
-rsync -avzp --include '*/' --include '*.srm' --exclude '*' $REMOTE_ROM_FOLDER $BACKUP$NOW/remote_savegames
+rsync -avzp --include '*/' --include '*.srm' --include '*.sav' --include '*.state' --exclude '*' $REMOTE_ROM_FOLDER $BACKUP$NOW/remote_savegames
 echo
 echo "Updating to newest version savegames in $LOCAL_ROM_FOLDER and $REMOTE_ROM_FOLDER"
-rsync -avzp --include '*/' --include '*.srm' --exclude '*' $LOCAL_ROM_FOLDER $REMOTE_ROM_FOLDER
-rsync -avzp --include '*/' --include '*.srm' --exclude '*' $REMOTE_ROM_FOLDER $LOCAL_ROM_FOLDER
+rsync -avzp --update --include '*/' --include '*.srm' --include '*.sav' --include '*.state' --exclude '*' $LOCAL_ROM_FOLDER $REMOTE_ROM_FOLDER
+rsync -avzp --update --include '*/' --include '*.srm' --include '*.sav' --include '*.state' --exclude '*' $REMOTE_ROM_FOLDER $LOCAL_ROM_FOLDER
 echo "Done! :)"
