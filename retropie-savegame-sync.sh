@@ -1,8 +1,8 @@
 # RetroPie Savegame SyncThingie by @pitto
 # https://github.com/ltpitt
 #
-# This script keeps to keep savegames in sync between my two
-# RetroPie devices: a Raspberry Pi 3 and a Gameboy Zero
+# This script keeps to keep savegames in sync between two
+# RetroPie devices (e.g. a Raspberry Pi 3 and a Gameboy Zero)
 #
 # You can launch it manually or add it to cron or /etc/rc.local
 #
