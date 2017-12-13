@@ -6,14 +6,15 @@
 #
 # You can launch it manually or add it to cron or /etc/rc.local
 #
-# If you plan to execute it automatically you have to  be sure 
+# If you plan to execute it automatically you have to  be sure
 # that all ssh sources are accessible without password requests
 # using, for example, ssh-copy-id
 
 # Customize the following variables according to your setup
 LOCAL_ROM_FOLDER="/home/pi/RetroPie/roms/"
 REMOTE_ROM_FOLDER="pi@retropie:/home/pi/RetroPie/roms/"
-BACKUP="/home/pi/RetroPie/backup_savegames/"
+BACKUP="/home/pi/Backup/savegames/"
+MAX_NUMBER_OF_BACKUPS_KEPT=15
 
 # There should be no need to change anything below this line
 clear
@@ -37,3 +38,9 @@ echo "Updating to newest version savegames in $LOCAL_ROM_FOLDER and $REMOTE_ROM_
 rsync -avzp --update --include '*/' --include '*.srm' --include '*.sav' --include '*.state' --exclude '*' $LOCAL_ROM_FOLDER $REMOTE_ROM_FOLDER
 rsync -avzp --update --include '*/' --include '*.srm' --include '*.sav' --include '*.state' --exclude '*' $REMOTE_ROM_FOLDER $LOCAL_ROM_FOLDER
 echo "Done! :)"
+ITEMS_IN_BACKUP_FOLDER=$(ls $BACKUP  | wc -l)
+if [ "$ITEMS_IN_BACKUP_FOLDER" -gt $MAX_NUMBER_OF_BACKUPS_KEPT ]; then
+    echo "Deleting oldest folder"
+    cd $BACKUP
+    ls $BACKUP -A1t | tail -n -1 | xargs rm -R
+fi
